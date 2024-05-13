@@ -30,6 +30,25 @@ class NaiveBayesClassifier:
         m: sample size
         """
 
+def make_token(sentence:str, stopwords=None):
+    sentence = sentence.lower().strip()
+    if not stopwords:
+        sentence = ''.join([c for c in sentence 
+                            if c.isalpha() or c == ' '])
+    else:
+        sentence = ' '.join(word for word in sentence.split() 
+                            if word not in stopwords)
+
+    return sentence.split()
+
+def make_vocaburary(token:list, voca:list=None):
+    if not voca:
+        voca = {}
+
+    for word in token:
+        if word not in voca:
+            voca.append(word)
+    return voca
 
 if __name__ == "__main__":
     # download data
@@ -58,17 +77,15 @@ if __name__ == "__main__":
           {train_data.shape[0]}, {dev_data.shape[0]}, {test_data.shape[0]}")
 
     # sklearn 
+    # word count vector
     from sklearn.naive_bayes import MultinomialNB
     from sklearn.feature_extraction.text import CountVectorizer
 
-
-    vectorizer = CountVectorizer(ngram_range=(1,2))
+    vectorizer = CountVectorizer(ngram_range=(1,1))
     train_vector = vectorizer.fit_transform(train_data[:3, 1])
-    # temp = vectorizer.transform(['no no', 'no no no will'])
-    # print(temp.shape)
-    # print(temp)
     print(vectorizer.vocabulary_)
+    print(train_data[:3, 1])
     temp = vectorizer.transform(['no will check check'])
-    print(type(temp))
+    print(temp.toarray())
     print(temp.shape)
-    # print()
+    
