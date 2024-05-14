@@ -49,13 +49,13 @@ class NaiveBayesClassifier:
 
 # Example usage:
 X_train = [
-    [1, 'S'],
+    [1, 'S'],#0
+    [1, 'M'],#0
     [1, 'M'],
-    [1, 'M'],
     [1, 'S'],
-    [1, 'S'],
-    [2, 'S'],
-    [2, 'M'],
+    [1, 'S'],#0
+    [2, 'S'],#0
+    [2, 'M'],#0
     [2, 'M'],
     [2, 'L'],
     [2, 'L'],
@@ -63,7 +63,7 @@ X_train = [
     [3, 'M'],
     [3, 'M'],
     [3, 'L'],
-    [3, 'L']
+    [3, 'L']#0
 ]
 
 y_train = [0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0]
@@ -80,6 +80,16 @@ nb_classifier = NaiveBayesClassifier()
 # Train the classifier
 nb_classifier.fit(X_train, y_train)
 
+print(nb_classifier.class_probs)
+print(nb_classifier.feature_probs)
+# print(nb_classifier.feature_probs[0])
+# print(nb_classifier.feature_probs[1])
+
 # Make predictions
 predictions = nb_classifier.predict(X_test)
+print("-- prediction --")
 print(predictions)
+
+# {0: 0.4, 1: 0.6}
+# {0: {0: {1: 7.5, 2: 5.0, 3: 2.5}, 1: {'M': 5.0, 'S': 7.5, 'L': 2.5}}, 
+#  1: {0: {1: 3.3333333333333335, 2: 5.0, 3: 6.666666666666667}, 1: {'M': 6.666666666666667, 'S': 1.6666666666666667, 'L': 6.666666666666667}}}
